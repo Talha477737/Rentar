@@ -1,0 +1,15 @@
+#static {
+  font-family: "Kanit", sans-serif;
+  font-size: 35px;
+  font-weight: bold;
+}
+#Rent {
+  border-radius: 30px;
+}
+
+#related {
+  font-family: "Kanit", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}

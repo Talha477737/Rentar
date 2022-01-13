@@ -1,0 +1,35 @@
+#landing {
+  background-color: white;
+  height: 90vh;
+  border: 1px solid white;
+  border-radius: 0px 0px 30px 30px;
+  background-image: url("../Assets/car1.gif");
+  background-repeat: repeat;
+  text-align: center;
+}
+#simple {
+  font-family: "Kanit", sans-serif;
+  font-size: 25px;
+  display: inline-block;
+}
+
+#bodytext {
+  font-family: "Kanit", sans-serif;
+  font-size: 25px;
+}
+
+#important {
+  font-family: "Pacifico", cursive;
+  font-size: 25px;
+}
+
+#head {
+  font-family: "Pacifico", cursive;
+  display: inline-block;
+  font-size: 50px;
+  color: #0055ff;
+}
+
+#choice {
+  border-radius: 30px;
+}

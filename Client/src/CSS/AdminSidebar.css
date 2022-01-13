@@ -1,0 +1,10 @@
+#add {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#car {
+  image-resolution: 20px 20px;
+}

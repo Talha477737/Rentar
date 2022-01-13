@@ -1,0 +1,21 @@
+#head {
+  font-family: "Pacifico", cursive;
+  display: inline-block;
+  font-size: 35px;
+  color: #0055ff;
+}
+
+#pur {
+  font-size: 2rem;
+  color: #0055ff;
+  border: 1px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+  opacity: 1;
+  transition: 0.3s;
+}
+
+#pur:hover {
+  box-shadow: 0 4px 1rem -4px #000;
+  opacity: 0.6;
+}

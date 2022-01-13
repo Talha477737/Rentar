@@ -1,0 +1,14 @@
+.carousel-item {
+  height: 600px;
+  cursor: pointer;
+}
+.d-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 600px;
+}
+
+#cpic {
+  border-radius: 15px;
+}
