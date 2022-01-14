@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const Joi = require("joi");
 const router = express.Router();
+const multer = require("multer");
 
 const Car = mongoose.model(
   "Car",
@@ -11,15 +12,26 @@ const Car = mongoose.model(
     location: { type: String, required: true },
     isAvailable: { type: Boolean, default: true },
     date: { type: Date, default: Date.now },
-    images: [{ image: String, contenttype: String }],
-    brand: { type: String, required: true },
-    category: {
-      type: String,
-      enum: ["luxury", "standard", "truck"],
-      required: true,
-    },
+    images: [{ image: String, contentType: String }],
+    // brand: { type: String, required: true },
+    // category: {
+    //   type: String,
+    //   enum: ["luxury", "standard", "truck"],
+    //   required: true,
+    // },
   })
 );
+
+const Storage = multer.diskStorage({
+  destination: "uploads",
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({
+  storage: Storage,
+}).single("test");
 
 router.get("/", async (req, res) => {
   const cars = await Car.find().sort("title");
@@ -27,8 +39,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { title, rent, location, availability, images, brand, category } =
-    req.body;
+  const { title, rent, location, availability, images } = req.body;
 
   const { error } = ValidateCar(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -39,8 +50,6 @@ router.post("/", async (req, res) => {
     location: location,
     isAvailable: availability,
     images: images,
-    brand: brand,
-    category: category,
   });
 
   try {
@@ -61,8 +70,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const { title, rent, location, availability, images, brand, category } =
-    req.body;
+  const { title, rent, location, availability, images } = req.body;
 
   const { error } = ValidateCarOnPut(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -76,8 +84,6 @@ router.put("/:id", async (req, res) => {
         location: location,
         isAvailable: availability,
         images: images,
-        brand: brand,
-        category: category,
       },
     },
     { new: true }
@@ -101,8 +107,6 @@ function ValidateCar(car) {
     title: Joi.string().required().min(3),
     rent: Joi.number().required().min(3000),
     location: Joi.string().required(),
-    brand: Joi.string().required(),
-    category: Joi.string().required(),
     availability: Joi.string(),
     images: Joi.array(),
   });
@@ -115,8 +119,6 @@ function ValidateCarOnPut(car) {
     title: Joi.string().min(3),
     rent: Joi.number().min(3000),
     location: Joi.string(),
-    brand: Joi.string(),
-    category: Joi.string(),
     availability: Joi.string(),
     images: Joi.array(),
   });

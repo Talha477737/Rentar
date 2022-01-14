@@ -9,6 +9,7 @@ import Signin from "./Pages/Signin";
 import CarArchive from "./Pages/CarArchive";
 import CarSingle from "./Pages/CarSingle";
 import AdminAddCarForm from "./Components/AdminAddCarForm";
+import AdminUpdateCar from "./Components/AdminUpdateCar";
 
 import { Routes, Route } from "react-router";
 import Admin from "./Pages/Admin";
@@ -23,6 +24,7 @@ function App() {
         <Route path="Admin" element={<Admin data={Data} setdata={setData} />}>
           <Route path="AddNewCar" element={<AdminAddCarForm />} />
           <Route path="YourCars" element={<AdminYourCars />} />
+          <Route path="UpdateCar/:id" element={<AdminUpdateCar />} />
         </Route>
         <Route
           path="Cars/:Id"

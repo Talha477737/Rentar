@@ -1,12 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../CSS/AdminAddCarForm.css";
 import Joi from "joi-browser";
-const AdminAddCarForm = (props) => {
+import { useParams } from "react-router-dom";
+const AdminUpdateCar = (props) => {
+  const [Errors, setErrors] = useState([]);
+  const [Car, setCar] = useState([]);
   const [CarName, setCarName] = useState("");
   const [CarRent, setCarRent] = useState("");
   const [CarLocation, setCarLocation] = useState("");
-  const [Errors, setErrors] = useState([]);
+  const { id } = useParams();
+
+  useEffect(async () => {
+    await axios
+      .get(`http://localhost:3000/api/cars/${id}`)
+      .then(function (response) {
+        setCar(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    return () => {};
+  }, []);
+  console.log(Car);
+
+  console.log("Name: ", CarName);
+  console.log("Location: ", CarLocation);
+  console.log("Rent: ", CarRent);
+
+  const preLoadValues = () => {
+    setCarName(Car.title);
+    setCarLocation(Car.location);
+    setCarRent(Car.rent);
+  };
 
   const schema = {
     CarName: Joi.string().required().label("Car Name"),
@@ -45,17 +71,12 @@ const AdminAddCarForm = (props) => {
     if (errors) return;
 
     axios
-      .post("http://localhost:3000/api/cars/", {
+      .put(`http://localhost:3000/api/cars/${id}`, {
         title: CarName,
         location: CarLocation,
         rent: CarRent,
       })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .then((response) => console.log(response.data));
 
     setCarName("");
     setCarLocation(1);
@@ -84,7 +105,7 @@ const AdminAddCarForm = (props) => {
               className="form-control"
               id="Name"
               value={CarName}
-              placeholder="name@example.com"
+              placeholder="CarName"
               name="CarName"
               onChange={handleChange}
             />
@@ -161,4 +182,4 @@ const AdminAddCarForm = (props) => {
   );
 };
 
-export default AdminAddCarForm;
+export default AdminUpdateCar;
